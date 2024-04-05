@@ -58,3 +58,9 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 }
+
+module "dark_room_app_infra" {
+  source = "./modules/dark-room-app"
+
+  web_origin_bucket_name = "web-origin-dark-room-app"
+}
