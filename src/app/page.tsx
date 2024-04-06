@@ -2,8 +2,6 @@ import Image from "next/image";
 
 async function getData() {
   const res = await fetch('http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/meta-images.json')
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -15,7 +13,6 @@ async function getData() {
 
 export default async function Home() {
   const data = await getData();
-  console.log("data: ", data)
   const imageList = [];
   for (const index in data) {
     const asset = data[index];
