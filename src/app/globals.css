@@ -32,6 +32,11 @@ body {
   }
 }
 
+img {
+  height: auto;
+  width: auto;
+}
+
 .blue-color {
   color: blue;
 }
