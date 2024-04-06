@@ -1,5 +1,6 @@
 'use client';
 import Image from "next/image";
+import { InView } from 'react-intersection-observer';
 
 export default function ImageGallery({ imageData }) {
 
@@ -11,7 +12,18 @@ export default function ImageGallery({ imageData }) {
 
     }
 
-    imageList.push(<li onScroll={onScrollCB} key={index}><Image loading="lazy" src={"http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path} alt={asset.alt} width={300} height={300}/></li>)
+    imageList.push(
+      <li key={index}>
+        <InView>
+          {({ inView, ref, entry }) => (
+            <div ref={ref}>
+            <p>{`image inside viewport ${inView}.`}</p>
+            <Image loading="lazy" src={"http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path} alt={asset.alt} width={300} height={300}/>
+            </div>
+          )}
+        </InView>
+      </li>
+    )
   }
 
   return (
