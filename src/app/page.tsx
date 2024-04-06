@@ -13,10 +13,11 @@ async function getData() {
 
 export default async function Home() {
   const data = await getData();
+  console.log("data ", data)
   const imageList = [];
   for (const index in data) {
     const asset = data[index];
-    imageList.push(<li><Image src={"http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path} alt={asset.alt} width={300} height={300}/></li>)
+    imageList.push(<li><Image loading="lazy" src={"http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path} alt={asset.alt} width={300} height={300}/></li>)
   }
 
   return (

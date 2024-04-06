@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "upload": "./scripts/deploy.sh",
     "create-images-meta": "node scripts/create-images-meta.js",
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "deploy": "npm run build && npm run upload",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "next": "14.1.4",
