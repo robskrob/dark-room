@@ -14,7 +14,7 @@ async function getData() {
 export default async function Home() {
   const data = await getData();
   console.log("data ", data)
-  const truncated = [data[0], data[1], data[2]]
+  const truncated = [data[0], data[1], data[2], data[3], data[4]]
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
