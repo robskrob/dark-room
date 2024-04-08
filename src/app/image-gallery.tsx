@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { InView } from 'react-intersection-observer';
 
-export default function ImageGallery({ imageData }) {
+export default function ImageGallery({ imageData }: any) {
 
   const imageList = [];
   for (const index in imageData) {
