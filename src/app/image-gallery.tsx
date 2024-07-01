@@ -10,14 +10,21 @@ export default function ImageGallery({ imageGroups }: any) {
   for (const index in imageGroups) {
     groups.push(
       <li key={index}>
-        <ImageGroup imageData={imageGroups[index]} />
+        <InView triggerOnce={true}>
+          {({ inView, ref, entry }) => (
+            <div ref={ref}>
+              <p>{`group viewport ${inView}.`}</p>
+              <ImageGroup imageData={imageGroups[index]} />
+            </div>
+          )}
+        </InView>
       </li>
     )
   }
 
   return (
   <div className="flex flex-col relative gallery-viewport-max-height">
-    <ul className="overflow-auto">
+    <ul className="overflow-auto"> 
       {groups}
     </ul>
   </div>
