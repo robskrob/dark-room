@@ -55,6 +55,7 @@ export default function ImageGallery({ imageData }: any) {
       <ul className="overflow-auto px-4">{imageList}</ul>
     <button onClick={(event) => {
       event.stopPropagation();
+      console.log(clickedImages)
     }} className="mt-4 w-full bg-green-400">Download</button>
     </div>
   );
