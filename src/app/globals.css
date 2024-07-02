@@ -46,3 +46,11 @@ img {
 .gallery-viewport-max-height {
   max-height: 84vh;
 }
+
+.clicked--img {
+  border: 0.5rem rgb(74 222 128) solid;
+}
+
+.transparent-border-img {
+  border: 0.5rem solid transparent;
+}
