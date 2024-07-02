@@ -27,6 +27,6 @@ export default function ImageGroup({ imageData }: any) {
   });
 
   return (
-      <ul className="overflow-auto">{imageList}</ul>
+      <ul>{imageList}</ul>
   )
 }
