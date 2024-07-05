@@ -17,7 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>{children}</body>
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+            {children}
+          </div>
+        </main>
+      </body>
     </html>
   );
 }
