@@ -14,12 +14,21 @@ async function getData() {
   return res.json()
 }
 
-export default async function Home() {
+// Return a list of `params` to populate the [slug] dynamic segment
+export function generateStaticParams() {
+  // return ['/albums/test', '/albums/fun']
+  return [{ slug: 'test' }, { slug: 'fun' }, { id: '3' }]
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+
   const data = await getData();
+  const { slug } = params
+
 
   return (
     <div>
-      <p>Testing <span className="blue-color">this</span> bucket </p>
+      <p>Testing <span className="blue-color">hello</span> world </p> and  {slug}
       <ImageGallery imageData={data}/>
     </div>
   );
