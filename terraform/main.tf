@@ -63,4 +63,7 @@ module "dark_room_app_infra" {
   source = "./modules/dark-room-app"
 
   web_origin_bucket_name = "web-origin-dark-room-app"
+  image_bucket_name = "images-dark-room-app"
+  image_changes_topic_name = "dark-room-app-image-changes"
+  image_changes_queue_name = "dark-room-app-image-changes-queue"
 }
