@@ -5,6 +5,9 @@ resource "aws_lambda_function" "image_reducer_lambda" {
     handler          = "image-reducer.handler"
     source_code_hash = "${data.archive_file.image_reducer_zip.output_base64sha256}"
     runtime          = "nodejs20.x"
+    layers = [
+      aws_lambda_layer_version.nodejs_sharp_layer.arn,
+    ]
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -100,4 +103,11 @@ resource "aws_lambda_event_source_mapping" "image_reducer_lambda_event_source" {
     enabled          = true
     function_name    = "${aws_lambda_function.image_reducer_lambda.arn}"
     batch_size       = 1
+}
+
+resource "aws_lambda_layer_version" "nodejs_sharp_layer" {
+  filename   = "${path.module}/../../../lambdas/layers/nodejs_sharp_layer.zip"
+  layer_name = "nodejs_sharp_layer"
+
+  compatible_runtimes = ["nodejs20.x"]
 }
