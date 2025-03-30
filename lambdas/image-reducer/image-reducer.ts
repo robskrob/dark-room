@@ -1,6 +1,8 @@
 import { Handler } from 'aws-lambda';
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+import * as sharp from 'sharp'
 
 const s3Client = new S3Client({});
 
@@ -26,7 +28,25 @@ export const handler: Handler = async (event, context) => {
       }),
     );
     // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
-    const str = await response.Body.transformToString();
+    const buffer = await response.Body.transformToString();
+    // const timestamp = new Date().toISOString();
+    const ref = `${imageObj.object.key}.webp`;
+    const reducedBuffer = await sharp(buffer)
+      .webp({ quality: 20 })
+      .toBuffer();
+
+    const command = new PutObjectCommand({
+      Bucket: imageObj.bucket.name,
+      Key: `reduced-${imageObj.object.key}`,
+      Body: reducedBuffer,
+    });
+
+    const uploadResponse = await client.send(command);
+    console.log("uploadResponse: ", uploadResponse)
+    // await sharp(buffer)
+    //   .webp({ quality: 20 })
+    //   .toFile("./uploads/" + ref);
+
     console.log(str);
   } catch (caught) {
     console.log("caught error", caught)

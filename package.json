@@ -1,5 +1,8 @@
 {
   "name": "dark-room",
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "version": "0.1.0",
   "private": true,
