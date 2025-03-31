@@ -5,9 +5,15 @@ resource "aws_lambda_function" "image_reducer_lambda" {
     handler          = "image-reducer.handler"
     source_code_hash = "${data.archive_file.image_reducer_zip.output_base64sha256}"
     runtime          = "nodejs20.x"
-    layers = [
+    timeout          = 60 
+    memory_size      = 1536
+    layers           = [
       aws_lambda_layer_version.nodejs_sharp_layer.arn,
     ]
+
+    dead_letter_config {
+      target_arn = resource.aws_sqs_queue.image_reducer_lambda_dlq.arn
+    }
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -40,7 +46,8 @@ resource "aws_iam_role_policy" "lambda_role_sqs_policy" {
         "sqs:ChangeMessageVisibility",
         "sqs:DeleteMessage",
         "sqs:GetQueueAttributes",
-        "sqs:ReceiveMessage"
+        "sqs:ReceiveMessage",
+        "sqs:SendMessage"
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -50,32 +57,33 @@ resource "aws_iam_role_policy" "lambda_role_sqs_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_s3_read_policy" {
+# resource "aws_iam_role_policy_attachment" "lambda_s3_read_policy" {
 
-  role = aws_iam_role.lambda_role.id
+#   role = aws_iam_role.lambda_role.id
 
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 
+# }
+
+resource "aws_iam_role_policy" "lambda_role_s3_policy" {
+    name = "AllowS3Permissions"
+    role = "${aws_iam_role.lambda_role.id}"
+    policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
 }
-
-# resource "aws_iam_role_policy" "lambda_role_s3_policy" {
-#     name = "AllowS3Permissions"
-#     role = "${aws_iam_role.lambda_role.id}"
-#     policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": [
-#         "s3:GetObject"
-#       ],
-#       "Effect": "Allow",
-#       "Resource": "${resource.aws_s3_bucket.image_bucket.arn}"
-#     }
-#   ]
-# }
-# EOF
-# }
+EOF
+}
 
 resource "aws_iam_role_policy" "lambda_role_logs_policy" {
     name = "LambdaRolePolicy"

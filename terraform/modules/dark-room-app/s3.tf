@@ -46,6 +46,10 @@ resource "aws_s3_bucket" "image_bucket" {
   bucket = var.image_bucket_name
 }
 
+resource "aws_s3_bucket" "reduced_image_bucket" {
+  bucket = var.reduced_image_bucket_name
+}
+
 data "aws_iam_policy_document" "image_changes_topic_policy" {
   statement {
     effect = "Allow"

@@ -22,16 +22,21 @@ export const handler: Handler = async (event, context) => {
         Key: key,
       }),
     );
+
+    console.log("here 1")
     const imgData = await response.Body.transformToByteArray();
+    console.log("here 2")
     const reducedBuffer = await sharp(imgData).webp({ quality: 20 }).toBuffer();
+    console.log("here 3")
 
     const command = new PutObjectCommand({
-      Bucket: imageObj.bucket.name,
+      Bucket: "dark-room-reduced-images-dark-room",
       Key: `reduced-${key}`,
       Body: reducedBuffer,
     });
 
     const uploadResponse = await client.send(command);
+    console.log("uploadResponse", uploadResponse)
 
   } catch (caught) {
     console.log("caught error", caught)
