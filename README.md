@@ -3,6 +3,16 @@
 An elegant application for a more civilized age
 
 
+## Terraform
+
+```
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

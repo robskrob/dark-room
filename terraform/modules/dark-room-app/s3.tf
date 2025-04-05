@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "www_bucket" {
   bucket = var.web_origin_bucket_name
 }
@@ -40,3 +42,26 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
      ]
    })
  }
+
+
+resource "aws_s3_bucket" "image_bucket" {
+  bucket = var.image_bucket_name
+}
+
+resource "aws_s3_bucket" "reduced_image_bucket" {
+  bucket = var.reduced_image_bucket_name
+}
+
+resource "aws_sns_topic_policy" "image_changes_topic_policy_attachment" {
+  arn    = aws_sns_topic.image_changes_topic.arn
+  policy = data.aws_iam_policy_document.image_changes_topic_policy.json
+}
+
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = aws_s3_bucket.image_bucket.id
+  topic {
+    topic_arn     = aws_sns_topic.image_changes_topic.arn
+    events        = ["s3:ObjectCreated:*"]
+  }
+}
+

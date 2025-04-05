@@ -49,6 +49,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_c
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "dark-room-app-terraform-state-locking"
   billing_mode = "PAY_PER_REQUEST"
@@ -63,4 +65,11 @@ module "dark_room_app_infra" {
   source = "./modules/dark-room-app"
 
   web_origin_bucket_name = "web-origin-dark-room-app"
+  image_bucket_name = "dr-original-images"
+  reduced_image_bucket_name = "dr-reduced-images"
+  image_changes_topic_name = "dr-image-changes"
+  image_changes_queue_name = "dr-image-changes-queue"
+  image_reducer_lambda_dlq_name = "dr-image-reducer-lambda-dlq"
+
+
 }

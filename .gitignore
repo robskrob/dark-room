@@ -6,6 +6,10 @@
 .pnp.js
 .yarn/install-state.gz
 
+/lambdas/image-reducer/node_modules
+/lambdas/image-reducer/image-reducer.js
+/lambdas/image-reducer/image-reducer.zip
+
 # testing
 /coverage
 
