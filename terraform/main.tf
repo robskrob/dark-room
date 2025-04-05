@@ -49,6 +49,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_c
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "dark-room-app-terraform-state-locking"
   billing_mode = "PAY_PER_REQUEST"

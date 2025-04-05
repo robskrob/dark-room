@@ -23,11 +23,8 @@ export const handler: Handler = async (event, context) => {
       }),
     );
 
-    console.log("here 1")
     const imgData = await response.Body.transformToByteArray();
-    console.log("here 2")
     const reducedBuffer = await sharp(imgData).webp({ quality: 20 }).toBuffer();
-    console.log("here 3")
 
     const command = new PutObjectCommand({
       Bucket: "dr-reduced-images",
@@ -36,7 +33,6 @@ export const handler: Handler = async (event, context) => {
     });
 
     const uploadResponse = await client.send(command);
-    console.log("uploadResponse", uploadResponse)
 
   } catch (caught) {
     console.log("caught error", caught)
