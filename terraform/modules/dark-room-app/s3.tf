@@ -70,26 +70,6 @@ data "aws_iam_policy_document" "image_changes_topic_policy" {
   }
 }
 
-# data "aws_iam_policy_document" "image_reducer_lambda_policy" {
-#   statement {
-#     effect = "Allow"
-
-#     principals {
-#       type        = "Service"
-#       identifiers = ["s3.amazonaws.com"]
-#     }
-
-#     actions   = ["s3:GetObject"]
-#     resources = [resource.aws_lambda_function.image_reducer_lambda.arn]
-
-#     condition {
-#       test     = "ArnLike"
-#       variable = "aws:SourceArn"
-#       values   = [aws_s3_bucket.image_bucket.arn]
-#     }
-#   }
-# }
-
 resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = aws_s3_bucket.image_bucket.id
   topic {
