@@ -1,7 +1,6 @@
 #!/bin/sh
 
 
-npm run create-images-meta
 
 aws s3 cp ./out/index.html s3://web-origin-dark-room-app
 aws s3 cp ./out/index.txt s3://web-origin-dark-room-app

@@ -5,8 +5,8 @@ const client = new S3Client({});
 
 (async () => {
   const command = new ListObjectsV2Command({
-    Bucket: "web-origin-dark-room-app",
-    Prefix: "images"
+    Bucket: "dr-reduced-images",
+    // Prefix: "images"
   });
 
   try {
