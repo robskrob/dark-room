@@ -27,3 +27,10 @@ variable "image_reducer_lambda_dlq_name" {
   type = string
   description = "The name of dead letter sqs queue for image reducer lambda"
 }
+
+variable "region" {
+  type = string
+  description = "AWS Region"
+  default     = "us-east-1"
+}
+

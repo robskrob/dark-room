@@ -68,4 +68,6 @@ module "dark_room_app_infra" {
   image_changes_topic_name = "dr-image-changes"
   image_changes_queue_name = "dr-image-changes-queue"
   image_reducer_lambda_dlq_name = "dr-image-reducer-lambda-dlq"
+
+
 }

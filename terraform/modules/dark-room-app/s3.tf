@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_s3_bucket" "www_bucket" {
   bucket = var.web_origin_bucket_name
 }
@@ -50,24 +52,9 @@ resource "aws_s3_bucket" "reduced_image_bucket" {
   bucket = var.reduced_image_bucket_name
 }
 
-data "aws_iam_policy_document" "image_changes_topic_policy" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["s3.amazonaws.com"]
-    }
-
-    actions   = ["SNS:Publish"]
-    resources = [aws_sns_topic.image_changes_topic.arn]
-
-    condition {
-      test     = "ArnLike"
-      variable = "aws:SourceArn"
-      values   = [aws_s3_bucket.image_bucket.arn]
-    }
-  }
+resource "aws_sns_topic_policy" "image_changes_topic_policy_attachment" {
+  arn    = aws_sns_topic.image_changes_topic.arn
+  policy = data.aws_iam_policy_document.image_changes_topic_policy.json
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {

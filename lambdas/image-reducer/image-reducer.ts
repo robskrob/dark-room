@@ -30,7 +30,7 @@ export const handler: Handler = async (event, context) => {
     console.log("here 3")
 
     const command = new PutObjectCommand({
-      Bucket: "dark-room-reduced-images-dark-room",
+      Bucket: "dr-reduced-images",
       Key: `reduced-${key}`,
       Body: reducedBuffer,
     });
