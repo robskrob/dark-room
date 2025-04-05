@@ -37,18 +37,21 @@ export default function ImageGallery({ imageData }: any) {
                 
                 // setClickedImages(clickedImages);
                 
+                // https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com
+
+                const rootPath = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/"
 
                 setClickedImages( // Replace the state
                   [ // with a new array
                       ...clickedImages, // that contains all the old items
-                      { path: "http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path, alt: asset.alt  }
+                      { path: rootPath + asset.path, alt: asset.alt  }
                     ]
                 );
               }} >
                 <Image 
                   ref={ref}
                   loading="lazy" 
-                  src={inView ? "http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path : "/icon-image-file.svg"} 
+                  src={inView ? "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/" + asset.path : "/icon-image-file.svg"} 
                   className="transparent-border-img"
                   alt={asset.alt} 
                   width={300} 
