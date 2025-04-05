@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "image_reducer_lambda" {
     filename         = "${path.module}/../../../lambdas/image-reducer/image-reducer.zip"
-    function_name    = "dark-room-image-reducer"
+    function_name    = "dr-image-reducer"
     role             = "${aws_iam_role.lambda_role.arn}"
     handler          = "image-reducer.handler"
     source_code_hash = "${data.archive_file.image_reducer_zip.output_base64sha256}"
