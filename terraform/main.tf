@@ -63,9 +63,9 @@ module "dark_room_app_infra" {
   source = "./modules/dark-room-app"
 
   web_origin_bucket_name = "web-origin-dark-room-app"
-  image_bucket_name = "images-dark-room-app"
-  reduced_image_bucket_name = "dark-room-reduced-images-dark-room"
-  image_changes_topic_name = "dark-room-app-image-changes"
-  image_changes_queue_name = "dark-room-app-image-changes-queue"
-  image_reducer_lambda_dlq_name = "image-reducer-lambda-dlq"
+  image_bucket_name = "dr-images"
+  reduced_image_bucket_name = "dr-reduced-images"
+  image_changes_topic_name = "dr-image-changes"
+  image_changes_queue_name = "dr-image-changes-queue"
+  image_reducer_lambda_dlq_name = "dr-image-reducer-lambda-dlq"
 }
