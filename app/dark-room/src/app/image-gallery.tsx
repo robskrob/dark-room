@@ -77,7 +77,7 @@ export default function ImageGallery({ imageData }: any) {
                   height={300} />
               </a>
               <div>
-                <Link href={`/images/${asset.path}`}>view details </Link>
+                <Link href={`/details/${asset.path}`}>view details </Link>
               </div>
             </div>
           )}
