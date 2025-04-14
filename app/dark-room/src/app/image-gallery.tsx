@@ -2,6 +2,11 @@
 import { useState } from 'react';
 import Image from "next/image";
 import { InView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link'
+
+// import ImageView from './images/[imageId]/image-view';
+
 
 type Asset = {
   path: string;
@@ -10,21 +15,36 @@ type Asset = {
 
 export default function ImageGallery({ imageData }: any) {
 
+  const baseUrl = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com";
   const imageList = [];
   const [clickedImages, setClickedImages] = useState<Asset[]>([]);
+  const router = useRouter();
+
   for (const index in imageData) {
     const asset = imageData[index];
+    // const rootPath = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/"
+
+    // const assetPath = `${baseUrl}/${asset.path}`
+    let assetPath;
+    if (asset.path.includes("/images/")) {
+      assetPath = baseUrl + asset.path
+    } else {
+      assetPath = `${baseUrl}/images/` + asset.path
+    }
+
+    // const goToImage = (slug: string) => {
+    //   // router.push({pathname: '/images', query: {id: "2"}});
+    //   router.push(`/images/1`);
+    // };
+
 
     imageList.push(
       <li key={index}>
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
-            <div>
-            <p>{`image inside viewport ${inView}.`}</p>
+            <div className="flex flex-col">
               <a href="#"  onClick={(event: any) => {
                 event.stopPropagation();
-                console.log("event.target", event.target)
-                console.log("event.target.classList", event.target.classList)
                 if (event.target.classList.contains('clicked--img')) {
                   event.target.classList.add('transparent-border-img')
                   event.target.classList.remove('clicked--img')
@@ -39,24 +59,26 @@ export default function ImageGallery({ imageData }: any) {
                 
                 // https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com
 
-                const rootPath = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/"
 
                 setClickedImages( // Replace the state
                   [ // with a new array
                       ...clickedImages, // that contains all the old items
-                      { path: rootPath + asset.path, alt: asset.alt  }
+                      { path: assetPath, alt: asset.alt  }
                     ]
                 );
               }} >
                 <Image 
                   ref={ref}
                   loading="lazy" 
-                  src={inView ? "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/" + asset.path : "/icon-image-file.svg"} 
+                  src={inView ? assetPath : "/icon-image-file.svg"} 
                   className="transparent-border-img"
                   alt={asset.alt} 
                   width={300} 
                   height={300} />
               </a>
+              <div>
+                <Link href={`/images/${asset.path}`}>view details </Link>
+              </div>
             </div>
           )}
         </InView>
@@ -73,3 +95,9 @@ export default function ImageGallery({ imageData }: any) {
     </div>
   );
 }
+              // <a 
+              //   href="#" 
+              //   onClick={() => router.push('/images/2')}
+              //   className="block p-[1em] text-center"> 
+              //   View Details 
+              // </a>

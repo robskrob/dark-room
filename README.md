@@ -40,7 +40,20 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ```
 cd app/dark-room
-npm run build
+# Create meta-images.json file
+# which exists in the bucket
+# as a static map to all the image files.
+# When we build the static export for this app
+# the app makes a network request to `/meta-images.json`.
+# It receives a list of objects. Each object contains path
+# information to the corresponding image file.
+# With this list of image file data, the app then generates 
+# all the html it needs for all the images. The JS, on scroll, will replace
+# the image's default image with the real path to the real image 
+# so that browswer can optimally load images.  
 node ./scripts/create-images-meta.js
-./scripts/deploy.sh
+./scripts/deploy-meta-images.sh
+npm run build
+sed -i '' 's|"/_next/|"./_next/|g' out/index.html
+./scripts/deploy-assets.sh
 ```

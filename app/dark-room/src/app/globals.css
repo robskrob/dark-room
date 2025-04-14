@@ -41,6 +41,11 @@ img {
   color: blue;
 }
 
+.red-color {
+  color: red;
+}
+
+
 .gallery-viewport-max-height {
   max-height: 84vh;
 }
