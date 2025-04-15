@@ -28,7 +28,7 @@ export const handler: Handler = async (event, context) => {
 
     const command = new PutObjectCommand({
       Bucket: "dr-reduced-images",
-      ContentType: "image/jpeg",
+      ContentType: "image/webp",
       Key: `reduced-${key}`,
       Body: reducedBuffer,
     });
