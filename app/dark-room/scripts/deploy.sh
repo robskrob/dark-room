@@ -6,6 +6,6 @@ node ./create-images-meta.js
 cd ..
 npm run build
 sed -i '' 's|"/_next/|"./_next/|g' ./out/index.html
-sed -i '' 's|"/_next/|"./_next/|g' ./out/details/*.html
+# sed -i '' 's|"/_next/|"./_next/|g' ./out/details/*.html
 cd ./scripts
 ./deploy-assets.sh
