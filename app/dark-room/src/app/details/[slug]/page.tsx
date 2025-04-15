@@ -1,7 +1,4 @@
-// 'use client'
-// import { useEffect } from 'react'
 import Image from "next/image";
-// import { useParams } from 'next/navigation';
 
 async function getData() {
   const res = await fetch('http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/meta-images.json')
@@ -29,9 +26,6 @@ export async function generateStaticParams() {
       slug: m.path
     }
   })
-
-  // return res.json()
-  // return [{ slug: '1' }, { slug: '2' }, { slug: '3' }]
 }
 
 
@@ -41,16 +35,13 @@ export default async function Page({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  console.log("slug", slug)
-
 
   return (
-    <div>
-      <h1>"test show"</h1>
+    <div className="flex justify-center">
       <Image 
         loading="lazy" 
         src={`https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/${slug}`}
-        className="transparent-border-img"
+        className="max-h-screen transparent-border-img"
         alt="test-alt" 
         width={300} 
         height={300} />

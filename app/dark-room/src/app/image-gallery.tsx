@@ -5,9 +5,6 @@ import { InView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 
-// import ImageView from './images/[imageId]/image-view';
-
-
 type Asset = {
   path: string;
   alt: any;
@@ -22,20 +19,12 @@ export default function ImageGallery({ imageData }: any) {
 
   for (const index in imageData) {
     const asset = imageData[index];
-    // const rootPath = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/"
-
-    // const assetPath = `${baseUrl}/${asset.path}`
     let assetPath;
     if (asset.path.includes("/images/")) {
       assetPath = baseUrl + asset.path
     } else {
       assetPath = `${baseUrl}/images/` + asset.path
     }
-
-    // const goToImage = (slug: string) => {
-    //   // router.push({pathname: '/images', query: {id: "2"}});
-    //   router.push(`/images/1`);
-    // };
 
 
     imageList.push(
@@ -53,16 +42,10 @@ export default function ImageGallery({ imageData }: any) {
                   event.target.classList.remove('transparent-border-img')
                 }
 
-                // clickedImages.push({ path: "http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/" + asset.path, alt: asset.alt  })
-                
-                // setClickedImages(clickedImages);
-                
-                // https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com
 
-
-                setClickedImages( // Replace the state
-                  [ // with a new array
-                      ...clickedImages, // that contains all the old items
+                setClickedImages(
+                  [
+                      ...clickedImages,
                       { path: assetPath, alt: asset.alt  }
                     ]
                 );
@@ -77,7 +60,7 @@ export default function ImageGallery({ imageData }: any) {
                   height={300} />
               </a>
               <div>
-                <Link href={`/details/${asset.path}`}>view details </Link>
+                <Link className="block text-center p-[1em]" href={`/details/${asset.path}`}>View Details </Link>
               </div>
             </div>
           )}
@@ -95,9 +78,3 @@ export default function ImageGallery({ imageData }: any) {
     </div>
   );
 }
-              // <a 
-              //   href="#" 
-              //   onClick={() => router.push('/images/2')}
-              //   className="block p-[1em] text-center"> 
-              //   View Details 
-              // </a>
