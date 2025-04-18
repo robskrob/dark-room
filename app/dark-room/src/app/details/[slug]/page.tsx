@@ -40,7 +40,7 @@ export default async function Page({
     <div className="flex justify-center">
       <Image 
         loading="lazy" 
-        src={`https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/${slug}`}
+        src={`https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/${slug.replace("reduced-", "")}`}
         className="max-h-screen transparent-border-img"
         alt="test-alt" 
         width={300} 

@@ -31,7 +31,7 @@ export default function ImageGallery({ imageData }: any) {
       <li key={index}>
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
-            <div className="flex flex-col">
+            <div className={"flex flex-col"}>
               <a href="#"  onClick={(event: any) => {
                 event.stopPropagation();
                 if (event.target.classList.contains('clicked--img')) {

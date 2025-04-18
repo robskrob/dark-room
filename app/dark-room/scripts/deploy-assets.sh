@@ -1,5 +1,6 @@
 #!/bin/sh
 aws s3 sync s3://dr-reduced-images s3://web-origin-dark-room-app/images 
+aws s3 sync s3://dr-original-images s3://web-origin-dark-room-app/images 
 aws s3 sync ../out/details s3://web-origin-dark-room-app/details
 
 cp ../public/icon-image-file.svg ../out/icon-image-file.svg
