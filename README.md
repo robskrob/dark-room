@@ -76,3 +76,11 @@ sed -i '' 's|"/_next/|"./_next/|g' ./out/details/*.html
 # upload static assets to s3
 ./scripts/deploy-assets.sh
 ```
+
+## Invalidate CDN cache
+
+```
+aws cloudfront create-invalidation --distribution-id E38ZHYUT0SSAF7 --paths "/*";
+aws cloudfront create-invalidation --distribution-id ETR6F8LVOKAP8 --paths "/*";
+```
+
