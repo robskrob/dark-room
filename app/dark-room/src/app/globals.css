@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -39,9 +37,6 @@ img {
   width: auto;
 }
 
-.blue-color {
-  color: blue;
-}
 
 .gallery-viewport-max-height {
   max-height: 84vh;
@@ -53,4 +48,23 @@ img {
 
 .transparent-border-img {
   border: 0.5rem solid transparent;
+}
+
+@media (min-width: 767px) {
+
+  .gallery-grid {
+    display: flex;
+    flex-wrap: wrap
+  }
+
+  .gallery-item {
+    max-width: 50%;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  .gallery-item {
+    max-width: 30%;
+  }
 }

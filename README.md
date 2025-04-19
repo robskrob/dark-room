@@ -2,6 +2,12 @@
 
 An elegant application for a more civilized age
 
+## Instructions
+
+To remove an image from being viewed, delete the image from the `dr-reduced-images` bucket. The `dr-reduced-images` bucket is cache copy of `dr-original-images` bucket.
+
+After deleting the image, then re-deploy the app to rebuild the HTML.
+
 
 ## Terraform
 
@@ -36,17 +42,37 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+```
+cd app/dark-room
+# delete local next directory
+# in case there's weird caching 
+# issues
+rm -rf .next/
+# Create meta-images.json file
+# which exists in the bucket
+# as a static map to all the image files.
+# When we build the static export for this app
+# the app makes a network request to `/meta-images.json`.
+# It receives a list of objects. Each object contains path
+# information to the corresponding image file.
+# With this list of image file data, the app then generates 
+# all the html it needs for all the images. The JS, on scroll, will replace
+# the image's default image with the real path to the real image 
+# so that browswer can optimally load images.  
+node ./scripts/create-images-meta.js
+# upload this file to meta images
+./scripts/deploy-meta-images.sh
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# build static html
+npm run build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# make sure assets points to current 
+# working directory so page can find
+# assets
+sed -i '' 's|"/_next/|"./_next/|g' out/index.html
+sed -i '' 's|"/_next/|"./_next/|g' ./out/details/*.html
+# upload static assets to s3
+./scripts/deploy-assets.sh
+```
