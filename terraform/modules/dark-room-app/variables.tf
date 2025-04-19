@@ -1,6 +1,6 @@
-variable "web_origin_bucket_name" {
-  type = string
-  description = "The name of the bucket"
+variable "domain_name" {
+  type        = string
+  description = "The domain name for the website."
 }
 
 variable "image_bucket_name" {
@@ -32,5 +32,10 @@ variable "region" {
   type = string
   description = "AWS Region"
   default     = "us-east-1"
+}
+
+variable "web_origin_bucket_name" {
+  type = string
+  description = "The name of the bucket"
 }
 

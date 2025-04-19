@@ -64,6 +64,8 @@ resource "aws_dynamodb_table" "terraform_locks" {
 module "dark_room_app_infra" {
   source = "./modules/dark-room-app"
 
+  domain_name = "darkroom.cfd"
+
   web_origin_bucket_name = "web-origin-dark-room-app"
   image_bucket_name = "dr-original-images"
   reduced_image_bucket_name = "dr-reduced-images"
