@@ -2,6 +2,12 @@
 
 An elegant application for a more civilized age
 
+## Instructions
+
+To remove an image from being viewed, delete the image from the `dr-reduced-images` bucket. The `dr-reduced-images` bucket is cache copy of `dr-original-images` bucket.
+
+After deleting the image, then re-deploy the app to rebuild the HTML.
+
 
 ## Terraform
 
