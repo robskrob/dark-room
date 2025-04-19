@@ -14,7 +14,6 @@ export default function ImageGallery({ imageData }: any) {
 
   const baseUrl = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com";
   const imageList = [];
-  const [clickedImages, setClickedImages] = useState<Asset[]>([]);
   const router = useRouter();
 
   for (const index in imageData) {
@@ -32,24 +31,7 @@ export default function ImageGallery({ imageData }: any) {
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
             <div className={"flex flex-col"}>
-              <a href="#"  onClick={(event: any) => {
-                event.stopPropagation();
-                if (event.target.classList.contains('clicked--img')) {
-                  event.target.classList.add('transparent-border-img')
-                  event.target.classList.remove('clicked--img')
-                } else {
-                  event.target.classList.add("clicked--img")
-                  event.target.classList.remove('transparent-border-img')
-                }
-
-
-                setClickedImages(
-                  [
-                      ...clickedImages,
-                      { path: assetPath, alt: asset.alt  }
-                    ]
-                );
-              }} >
+              <a href="#">
                 <Image 
                   ref={ref}
                   loading="lazy" 
@@ -72,9 +54,6 @@ export default function ImageGallery({ imageData }: any) {
   return (
     <div className="flex flex-col relative gallery-viewport-max-height">
       <ul className="gallery-grid justify-between overflow-auto">{imageList}</ul>
-    <button onClick={(event) => {
-      event.stopPropagation();
-    }} className="mt-4 w-full bg-green-400">Download</button>
     </div>
   );
 }
