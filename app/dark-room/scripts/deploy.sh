@@ -1,6 +1,8 @@
 #!/bin/sh
 
+
 cd ./scripts
+rm -rf ../.next/
 node ./create-images-meta.js
 ./deploy-meta-images.sh
 cd ..

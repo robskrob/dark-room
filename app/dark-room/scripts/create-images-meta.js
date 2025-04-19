@@ -5,18 +5,35 @@ import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 
 const client = new S3Client({});
 
+// const command = new ListObjectsV2Command({
+//   Bucket: "dr-reduced-images",
+// });
+
+const fetchAllKeys = async (params) => {
+
+  const response = await client.send(new ListObjectsV2Command(params));
+
+  if (response.IsTruncated) {
+
+    return response.Contents.concat(
+      await fetchAllKeys({
+        ...params,
+        ContinuationToken: response.NextContinuationToken
+      })
+    );
+  } else {
+    return response.Contents
+  }
+}
+
 (async () => {
-  const command = new ListObjectsV2Command({
-    Bucket: "dr-reduced-images",
-  });
 
   try {
-    const response = await client.send(command);
-    // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
-    console.log("truncated: ", response.IsTruncated)
-    console.log("file count: ", response.KeyCount)
+    const contents = await fetchAllKeys({
+      Bucket: "dr-reduced-images"
+    })
 
-    const contents = response.Contents;
+    console.log("file count: ", contents.length)
     const test = path.resolve( '../s3-contents.json' );
 
     await fs.writeFileSync(test, JSON.stringify(contents));

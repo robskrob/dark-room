@@ -28,7 +28,7 @@ export default function ImageGallery({ imageData }: any) {
 
 
     imageList.push(
-      <li key={index}>
+      <li key={index} className="gallery-item">
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
             <div className={"flex flex-col"}>
@@ -71,7 +71,7 @@ export default function ImageGallery({ imageData }: any) {
 
   return (
     <div className="flex flex-col relative gallery-viewport-max-height">
-      <ul className="overflow-auto px-4">{imageList}</ul>
+      <ul className="gallery-grid justify-between overflow-auto">{imageList}</ul>
     <button onClick={(event) => {
       event.stopPropagation();
     }} className="mt-4 w-full bg-green-400">Download</button>

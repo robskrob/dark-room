@@ -40,6 +40,10 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ```
 cd app/dark-room
+# delete local next directory
+# in case there's weird caching 
+# issues
+rm -rf .next/
 # Create meta-images.json file
 # which exists in the bucket
 # as a static map to all the image files.
@@ -52,8 +56,17 @@ cd app/dark-room
 # the image's default image with the real path to the real image 
 # so that browswer can optimally load images.  
 node ./scripts/create-images-meta.js
+# upload this file to meta images
 ./scripts/deploy-meta-images.sh
+
+# build static html
 npm run build
+
+# make sure assets points to current 
+# working directory so page can find
+# assets
 sed -i '' 's|"/_next/|"./_next/|g' out/index.html
+sed -i '' 's|"/_next/|"./_next/|g' ./out/details/*.html
+# upload static assets to s3
 ./scripts/deploy-assets.sh
 ```
