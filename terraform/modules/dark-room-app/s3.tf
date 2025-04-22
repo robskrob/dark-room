@@ -124,18 +124,6 @@ resource "aws_s3_bucket_public_access_block" "root_bucket_access_block" {
   restrict_public_buckets = false
 }
 
-# resource "aws_s3_bucket_cors_configuration" "root_s3_bucket_cors" {
-#   bucket = aws_s3_bucket.root_bucket.id
-
-#   cors_rule {
-#     allowed_headers = ["Authorization", "Content-Length"]
-#     allowed_methods = ["GET"]
-#     allowed_origins = ["https://${var.domain_name}"]
-#     max_age_seconds = 3000
-#   }
-# }
-
-
 resource "aws_s3_bucket" "image_bucket" {
   bucket = var.image_bucket_name
 }
