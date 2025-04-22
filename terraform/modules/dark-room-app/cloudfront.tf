@@ -63,7 +63,7 @@ resource "aws_cloudfront_distribution" "www_s3_distribution" {
 # Cloudfront S3 for redirect to www.
 resource "aws_cloudfront_distribution" "root_s3_distribution" {
   origin {
-    domain_name = aws_s3_bucket.www_bucket.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.root_bucket.bucket_regional_domain_name
     origin_id   = "S3-.${var.web_origin_bucket_name}"
     custom_origin_config {
       http_port              = 80
