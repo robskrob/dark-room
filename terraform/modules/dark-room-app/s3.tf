@@ -4,6 +4,14 @@ resource "aws_s3_bucket" "www_bucket" {
   bucket = "www.${var.web_origin_bucket_name}"
 }
 
+resource "aws_s3_bucket_website_configuration" "website_config" {
+  bucket = aws_s3_bucket.www_bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+}
+
 resource "aws_s3_bucket_acl" "s3_bucket_acl" {
   depends_on = [
     aws_s3_bucket_ownership_controls.s3_bucket_ownership,
