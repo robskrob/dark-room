@@ -16,7 +16,7 @@ export default function ImageGallery({ imageData }: any) {
   const imageList = [];
   const router = useRouter();
   const storageKey = 'elementRefKey';
-  const itemRefs = useRef({});
+  const itemRefs: any = useRef({});
 
   const handlePopstate = () => {
     sessionStorage.setItem('isBack', 'true');
@@ -29,8 +29,12 @@ export default function ImageGallery({ imageData }: any) {
     const target = sessionStorage.getItem(storageKey);
     const isBack = sessionStorage.getItem('isBack');
     if (target && isBack === 'true') {
-      itemRefs.current[target].scrollIntoView()
       sessionStorage.setItem('isBack', 'false');
+      itemRefs
+        .current[target]
+        .scrollIntoView({
+          block: 'start',    // aligns the element to the center vertically
+        })
     }
   }, []);
 
@@ -61,7 +65,6 @@ export default function ImageGallery({ imageData }: any) {
               </a>
               <div>
             <Link className="block text-center p-[1em]" href={`/details/${asset.path}`} onClick={(event: any) => {
-              console.log("target", asset.path)
               sessionStorage.setItem(storageKey, asset.path);
             }}>View Details </Link>
               </div>
