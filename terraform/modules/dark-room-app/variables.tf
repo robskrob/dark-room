@@ -34,11 +34,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-# variable "root_origin_bucket_name" {
-#   type = string
-#   description = "The name of the redirect bucket"
-# }
-
 variable "web_origin_bucket_name" {
   type = string
   description = "The name of the bucket"

@@ -4,8 +4,6 @@ async function getData() {
   const res = await fetch('https://www.darkroom.cfd/meta-images.json')
 
   if (!res.ok) {
-    console.log("get data res", res)
-
     throw new Error('slug page getData, Failed to fetch meta images data')
   }
 
@@ -16,9 +14,7 @@ export async function generateStaticParams() {
   const res = await fetch('https://www.darkroom.cfd/meta-images.json')
 
   if (!res.ok) {
-    console.log("generateStaticParams res", res)
-
-    throw new Error('generateStaticParams, Failed to fetch data')
+    throw new Error('slug page generateStaticParams, Failed to fetch data')
   }
 
   const imgs = await res.json()

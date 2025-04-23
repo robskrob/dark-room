@@ -6,7 +6,7 @@ resource "aws_acm_certificate" "ssl_certificate" {
 }
 
 # after running terraform apply
-# visit ACM certificates page https://us-east-1.console.aws.amazon.com/acm/home?region=us-east-1#/certificates/list
+# one might need to visit ACM certificates page https://us-east-1.console.aws.amazon.com/acm/home?region=us-east-1#/certificates/list
 # find the domain's certificate
 # click into it and press the button, send verification email
 resource "aws_acm_certificate_validation" "cert_validation" {
