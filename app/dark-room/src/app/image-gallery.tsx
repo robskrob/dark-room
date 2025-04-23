@@ -12,7 +12,7 @@ type Asset = {
 
 export default function ImageGallery({ imageData }: any) {
 
-  const baseUrl = "https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com";
+  const baseUrl = "https://www.darkroom.cfd";
   const imageList = [];
   const router = useRouter();
 

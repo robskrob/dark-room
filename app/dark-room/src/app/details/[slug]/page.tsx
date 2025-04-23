@@ -1,20 +1,20 @@
 import Image from "next/image";
 
 async function getData() {
-  const res = await fetch('http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/meta-images.json')
+  const res = await fetch('https://www.darkroom.cfd/meta-images.json')
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error('slug page getData, Failed to fetch meta images data')
   }
 
   return res.json()
 }
 
 export async function generateStaticParams() {
-  const res = await fetch('http://web-origin-dark-room-app.s3-website-us-east-1.amazonaws.com/meta-images.json')
+  const res = await fetch('https://www.darkroom.cfd/meta-images.json')
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error('slug page generateStaticParams, Failed to fetch data')
   }
 
   const imgs = await res.json()
@@ -38,7 +38,7 @@ export default async function Page({
     <div className="flex justify-center">
       <Image 
         loading="lazy" 
-        src={`https://web-origin-dark-room-app.s3.us-east-1.amazonaws.com/images/${slug.replace("reduced-", "")}`}
+        src={`https://www.darkroom.cfd/images/${slug.replace("reduced-", "")}`}
         className="max-h-screen transparent-border-img"
         alt="test-alt" 
         width={300} 
