@@ -17,8 +17,8 @@ export default async function Home() {
   const data = await getData();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
+    <main className="min-h-screen items-center justify-center flex flex-col">
+      <div className="main-padding main-max-width  z-10 w-full justify-center font-mono text-sm lg:flex">
         <ImageGallery imageData={data}/>
       </div>
     </main>

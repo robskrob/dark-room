@@ -50,6 +50,10 @@ img {
   border: 0.5rem solid transparent;
 }
 
+.main-padding {
+  padding: 2rem;
+}
+
 @media (min-width: 767px) {
 
   .gallery-grid {
@@ -62,9 +66,17 @@ img {
   }
 
 }
-
 @media (min-width: 1200px) {
+
   .gallery-item {
     max-width: 30%;
+  }
+
+  .main-padding {
+    padding: 10rem;
+  }
+
+  .main-max-width {
+    max-width: 150rem;
   }
 }

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from "next/image";
 import { InView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,28 @@ export default function ImageGallery({ imageData }: any) {
   const baseUrl = "https://www.darkroom.cfd";
   const imageList = [];
   const router = useRouter();
+  const storageKey = 'elementRefKey';
+  const itemRefs =  useRef<Record<string, HTMLLIElement | null>>({});
+
+  const handlePopstate = () => {
+    sessionStorage.setItem('isBack', 'true');
+  }
+
+  useEffect(() => {
+
+    window.addEventListener('popstate', handlePopstate);
+
+    const target = sessionStorage.getItem(storageKey);
+    const isBack = sessionStorage.getItem('isBack');
+    if (target && isBack === 'true') {
+      sessionStorage.setItem('isBack', 'false');
+      const element = itemRefs.current[target];
+
+      if (element) {
+        element.scrollIntoView({ block: 'start' });
+      }
+    }
+  }, []);
 
   for (const index in imageData) {
     const asset = imageData[index];
@@ -27,7 +49,7 @@ export default function ImageGallery({ imageData }: any) {
 
 
     imageList.push(
-      <li key={index} className="gallery-item">
+      <li key={index} className="gallery-item" ref={(el: any) => (itemRefs.current[asset.path] = el)}>
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
             <div className={"flex flex-col"}>
@@ -42,7 +64,9 @@ export default function ImageGallery({ imageData }: any) {
                   height={300} />
               </a>
               <div>
-                <Link className="block text-center p-[1em]" href={`/details/${asset.path}`}>View Details </Link>
+            <Link className="block text-center p-[1em]" href={`/details/${asset.path}`} onClick={(event: any) => {
+              sessionStorage.setItem(storageKey, asset.path);
+            }}>View Details </Link>
               </div>
             </div>
           )}
@@ -53,7 +77,9 @@ export default function ImageGallery({ imageData }: any) {
 
   return (
     <div className="flex flex-col relative gallery-viewport-max-height">
-      <ul className="gallery-grid justify-between overflow-auto">{imageList}</ul>
+      <ul className="gallery-grid justify-between overflow-auto">
+        {imageList}
+      </ul>
     </div>
   );
 }

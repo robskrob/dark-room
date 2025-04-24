@@ -35,14 +35,16 @@ export default async function Page({
   const { slug } = await params
 
   return (
-    <div className="flex justify-center">
-      <Image 
-        loading="lazy" 
-        src={`https://www.darkroom.cfd/images/${slug.replace("reduced-", "")}`}
-        className="max-h-screen transparent-border-img"
-        alt="test-alt" 
-        width={300} 
-        height={300} />
-    </div>
+    <main className="min-h-screen justify-center flex flex-col">
+      <div className="main-max-width flex justify-center">
+        <Image 
+          loading="lazy" 
+          src={`https://www.darkroom.cfd/images/${slug.replace("reduced-", "")}`}
+          className="max-h-screen transparent-border-img"
+          alt="test-alt" 
+          width={300} 
+          height={300} />
+      </div>
+    </main>
   )
 }
