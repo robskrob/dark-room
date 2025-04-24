@@ -16,7 +16,7 @@ export default function ImageGallery({ imageData }: any) {
   const imageList = [];
   const router = useRouter();
   const storageKey = 'elementRefKey';
-  const itemRefs: any = useRef({});
+  const itemRefs =  useRef<Record<string, HTMLLIElement | null>>({});
 
   const handlePopstate = () => {
     sessionStorage.setItem('isBack', 'true');
@@ -30,11 +30,11 @@ export default function ImageGallery({ imageData }: any) {
     const isBack = sessionStorage.getItem('isBack');
     if (target && isBack === 'true') {
       sessionStorage.setItem('isBack', 'false');
-      itemRefs
-        .current[target]
-        .scrollIntoView({
-          block: 'start',    // aligns the element to the center vertically
-        })
+      const element = itemRefs.current[target];
+
+      if (element) {
+        element.scrollIntoView({ block: 'start' });
+      }
     }
   }, []);
 
