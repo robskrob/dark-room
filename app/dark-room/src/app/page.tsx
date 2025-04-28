@@ -1,4 +1,4 @@
-import ImageGallery from "./image-gallery";
+import { ImageGallery } from "@/components";
 
 async function getData() {
   const res = await fetch("https://www.darkroom.cfd/meta-images.json");
