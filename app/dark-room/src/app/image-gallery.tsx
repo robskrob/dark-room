@@ -1,9 +1,9 @@
-'use client';
-import { useEffect, useState, useRef } from 'react';
+"use client";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { InView } from 'react-intersection-observer';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link'
+import { InView } from "react-intersection-observer";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Asset = {
   path: string;
@@ -11,29 +11,27 @@ type Asset = {
 };
 
 export default function ImageGallery({ imageData }: any) {
-
   const baseUrl = "https://www.darkroom.cfd";
   const imageList = [];
   const router = useRouter();
-  const storageKey = 'elementRefKey';
-  const itemRefs =  useRef<Record<string, HTMLLIElement | null>>({});
+  const storageKey = "elementRefKey";
+  const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
 
   const handlePopstate = () => {
-    sessionStorage.setItem('isBack', 'true');
-  }
+    sessionStorage.setItem("isBack", "true");
+  };
 
   useEffect(() => {
-
-    window.addEventListener('popstate', handlePopstate);
+    window.addEventListener("popstate", handlePopstate);
 
     const target = sessionStorage.getItem(storageKey);
-    const isBack = sessionStorage.getItem('isBack');
-    if (target && isBack === 'true') {
-      sessionStorage.setItem('isBack', 'false');
+    const isBack = sessionStorage.getItem("isBack");
+    if (target && isBack === "true") {
+      sessionStorage.setItem("isBack", "false");
       const element = itemRefs.current[target];
 
       if (element) {
-        element.scrollIntoView({ block: 'start' });
+        element.scrollIntoView({ block: "start" });
       }
     }
   }, []);
@@ -42,37 +40,47 @@ export default function ImageGallery({ imageData }: any) {
     const asset = imageData[index];
     let assetPath;
     if (asset.path.includes("/images/")) {
-      assetPath = baseUrl + asset.path
+      assetPath = baseUrl + asset.path;
     } else {
-      assetPath = `${baseUrl}/images/` + asset.path
+      assetPath = `${baseUrl}/images/` + asset.path;
     }
 
-
     imageList.push(
-      <li key={index} className="gallery-item" ref={(el: any) => (itemRefs.current[asset.path] = el)}>
+      <li
+        key={index}
+        className="gallery-item"
+        ref={(el: any) => (itemRefs.current[asset.path] = el)}
+      >
         <InView triggerOnce={true}>
           {({ inView, ref, entry }) => (
             <div className={"flex flex-col"}>
               <a href="#">
-                <Image 
+                <Image
                   ref={ref}
-                  loading="lazy" 
-                  src={inView ? assetPath : "/icon-image-file.svg"} 
+                  loading="lazy"
+                  src={inView ? assetPath : "/icon-image-file.svg"}
                   className="transparent-border-img"
-                  alt={asset.alt} 
-                  width={300} 
-                  height={300} />
+                  alt={asset.alt}
+                  width={300}
+                  height={300}
+                />
               </a>
               <div>
-            <Link className="block text-center p-[1em]" href={`/details/${asset.path}`} onClick={(event: any) => {
-              sessionStorage.setItem(storageKey, asset.path);
-            }}>View Details </Link>
+                <Link
+                  className="block text-center p-[1em]"
+                  href={`/details/${asset.path}`}
+                  onClick={(event: any) => {
+                    sessionStorage.setItem(storageKey, asset.path);
+                  }}
+                >
+                  View Details{" "}
+                </Link>
               </div>
             </div>
           )}
         </InView>
-      </li>
-    )
+      </li>,
+    );
   }
 
   return (

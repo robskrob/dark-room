@@ -1,5 +1,3 @@
-// 'use client';
-
 import ImageGallery from "./image-gallery";
 
 async function getData() {
