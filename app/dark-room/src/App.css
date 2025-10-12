@@ -32,11 +32,9 @@ body {
   }
 }
 
-img {
-  height: auto;
-  width: auto;
+#root {
+  width: 100%;
 }
-
 
 .gallery-viewport-max-height {
   max-height: 84vh;
@@ -54,27 +52,7 @@ img {
   padding: 2rem;
 }
 
-@media (min-width: 767px) {
-
-  .gallery-grid {
-    display: flex;
-    flex-wrap: wrap
-  }
-
-  .gallery-item {
-    max-width: 50%;
-  }
-
-}
 @media (min-width: 1200px) {
-
-  .gallery-item {
-    max-width: 30%;
-  }
-
-  .main-padding {
-    padding: 10rem;
-  }
 
   .main-max-width {
     max-width: 150rem;

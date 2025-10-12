@@ -1,20 +1,20 @@
-import { Handler } from 'aws-lambda';
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Handler } from "aws-lambda";
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
 
-import sharp from 'sharp'
-
-const s3Client = new S3Client({});
+import sharp from "sharp";
 
 export const handler: Handler = async (event, context) => {
-  const p1 = JSON.parse(event["Records"][0]["body"])
+  const p1 = JSON.parse(event["Records"][0]["body"]);
   const p2 = JSON.parse(p1["Message"]);
 
   const imageObj = p2["Records"][0]["s3"];
-  const key = imageObj.object.key
+  const key = imageObj.object.key;
 
   try {
-
     const client = new S3Client({});
     const response = await client.send(
       new GetObjectCommand({
@@ -33,12 +33,11 @@ export const handler: Handler = async (event, context) => {
       Body: reducedBuffer,
     });
 
-    const uploadResponse = await client.send(command);
-
+    await client.send(command);
   } catch (caught) {
-    console.log("caught error", caught)
+    console.log("caught error", caught);
     throw caught;
   }
-  
+
   return context.logStreamName;
 };
